@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purva's Cake Creation | Homemade Happiness, Baked with Love</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;600;700&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF2D55;
+            --secondary: #FF9A8B;
+            --dark: #2D3748;
+            --light: #F8F9FA;
+            --accent: #FFD166;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+            background-color: rgba(17,17,17,0.9);
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('bg.jpg');
+            background-size: cover;
+            background-position: center;
+            filter: blur(4px);
+            z-index: -1;
+            color: white;
+            line-height: 1.6;
+        }
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary) !important;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+        .logo { font-family: 'Great Vibes', cursive; font-weight: 700; font-size: 1.8rem; color: #FF2D55; }
+        .logo-icon img { max-width: 144%; }
+        .logo-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #FF9A8B, #FF2D55);
+            border-radius: 50%;
+            margin-right: 12px;
+        }
+        .cake-card { transition: all 0.3s ease; }
+        .cake-card:hover { transform: translateY(-10px); }
+        .gallery-item:hover .gallery-overlay { opacity: 1; }
+        @keyframes slide-left { 0% { transform: translateX(0%); } 100% { transform: translateX(-50%); } }
+        .animate-slide-testimonials { animation: slide-left 60s linear infinite; display: flex; width: max-content; }
+        #contact input, #contact textarea, #contact select {
+            color: #333; /* Dark grey text for inputs */
+        }
+        .bg-primary {
+             background-color: var(--primary) !important;
+        }
+        #nav-underline {
+            opacity: 0;
+            box-shadow: 0 0 10px var(--primary), 0 0 5px var(--primary);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md z-50 shadow-sm border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#home" class="flex items-center">
+                        <div class="logo-icon"><img src="logo.png" alt=""></div>
+                        <span class="logo">Purva's Cake Creation</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div id="nav-container" class="relative ml-10 flex items-center">
+                        <a href="#home" data-section="home" class="desktop-nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md font-medium">Home</a>
+                        <a href="#about" data-section="about" class="desktop-nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md font-medium">About</a>
+                        <a href="#cakes" data-section="cakes" class="desktop-nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md font-medium">Our Cakes</a>
+                        <a href="#gallery" data-section="gallery" class="desktop-nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md font-medium">Gallery</a>
+                        <a href="#testimonials" data-section="testimonials" class="desktop-nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md font-medium">Testimonials</a>
+                        <a href="#order" data-section="order" class="desktop-nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md font-medium">How to Order</a>
+                        <a href="#contact" data-section="contact" class="desktop-nav-link text-gray-700 hover:text-primary px-3 py-2 rounded-md font-medium">Contact</a>
+                        <div id="nav-underline" class="absolute bottom-0 h-0.5 bg-primary rounded-full transition-all duration-300 ease-out"></div>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-700 hover:text-primary focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-white/90 backdrop-blur-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md">Home</a>
+                <a href="#about" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md">About</a>
+                <a href="#cakes" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md">Our Cakes</a>
+                <a href="#gallery" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md">Gallery</a>
+                <a href="#testimonials" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md">Testimonials</a>
+                <a href="#order" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md">How to Order</a>
+                <a href="#contact" class="text-gray-700 hover:text-primary block px-3 py-2 rounded-md">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" data-section-id="home" class="pt-32 pb-24 md:pt-40 md:pb-32 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="flex flex-col md:flex-row items-center gap-12">
+            <div class="md:w-1/2 mb-10 md:mb-0">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">Homemade Happiness, <span class="text-primary">Baked with Love</span></h1>
+                <p class="text-xl text-white mb-10 max-w-lg">Every cake is handmade by Purva in her home kitchen using only 100% vegetarian ingredients — fresh, flavourful and full of heart.</p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="https://wa.me/7000936438" style="background-color: #25D366 !important; border-radius: 22px;" class="hover:bg-opacity-90 text-white font-bold py-3 px-6 md:py-4 md:px-8 text-center transition-all duration-300 hover:shadow-lg flex items-center justify-center text-sm md:text-base">
+                        <i class="fab fa-whatsapp mr-3 text-xl"></i> Order Now on WhatsApp
+                    </a>
+                    <a href="#cakes" class="bg-dark hover:bg-opacity-90 text-white font-bold py-4 px-8 rounded-lg text-center transition-all duration-300 hover:shadow-lg flex items-center justify-center">
+                        <i class="fas fa-birthday-cake mr-3 text-xl"></i> View Menu
+                    </a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center"><div class="relative max-w-lg"><img src="https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=800&q=80" alt="Beautifully decorated cake" class="w-full h-auto object-cover rounded-3xl shadow-2xl"></div></div>
+        </div>
+    </section>
+
+    <section id="about" data-section-id="about" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-rose-50 to-pink-50 rounded-3xl my-12">
+        <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-800">The Woman Behind the Whisk</h2></div>
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/3 mb-8 md:mb-0 flex justify-center"><img src="purva.jpg" alt="Purva baking" class="rounded-full w-64 h-64 object-cover shadow-lg border-4 border-white"></div>
+            <div class="md:w-2/3 md:pl-12 space-y-4 text-lg text-gray-700">
+                <p>Purva is a passionate home baker who turned her hobby into a heartfelt venture — Purva's Cake Creation. She believes celebrations become special when desserts are made with care.</p>
+                <p>Her cakes are eggless, homemade, and always customized with love. Whether it's a birthday, anniversary, baby shower, or festival — she brings sweet joy to every occasion.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="cakes" data-section-id="cakes" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold">Our Sweetest Creations</h2><p class="text-lg text-white max-w-3xl mx-auto">All cakes are made pure vegetarian, with zero preservatives, and handcrafted at home.</p></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+    </section>
+
+    <section id="gallery" data-section-id="gallery" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-amber-50 to-yellow-50 rounded-3xl my-12">
+        <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold">Made with Love, Baked to Impress</h2></div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+    </section>
+    
+    <section id="testimonials" data-section-id="testimonials" class="py-16 px-4">
+        <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold">What Our Customers Say</h2></div>
+        <div id="testimonials-container" class="w-full"></div>
+    </section>
+
+    <section class="bg-[#FFFCF1] py-16 px-4">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Follow Our Cake Journey</h2>
+            <p class="text-lg text-gray-600">Daily updates of our latest creations on Instagram</p>
+        </div>
+        <div class="overflow-x-auto px-4 scroll-smooth">
+            <div id="instagram-posts-container" class="flex gap-12 snap-x snap-mandatory px-4">
+                </div>
+        </div>
+        <div class="text-center mt-6">
+            <a href="https://www.instagram.com/cake_creation1105/" target="_blank"
+                class="inline-flex items-center text-lg text-gray-700 hover:text-pink-500">
+                <i class="fab fa-instagram mr-2"></i>Follow us @cake_creation1105
+            </a>
+        </div>
+    </section>
+    
+    <section id="order" data-section-id="order" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-rose-50 to-pink-50 rounded-3xl my-12">
+        <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold text-gray-800">Ordering Is Simple!</h2><p class="text-lg text-gray-600 max-w-3xl mx-auto">Get your custom cake in just 3 easy steps</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 px-4 md:px-0">
+            <div class="text-center"><div class="bg-primary w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md"><span class="text-3xl font-bold text-white">1</span></div><h3 class="text-xl font-bold text-gray-800 mb-3">Message us on WhatsApp</h3><p class="text-gray-600">Send us your requirements, occasion date, and any design ideas.</p></div>
+            <div class="text-center"><div class="bg-primary w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md"><span class="text-3xl font-bold text-white">2</span></div><h3 class="text-xl font-bold text-gray-800 mb-3">Choose your flavour & design</h3><p class="text-gray-600">We'll discuss options and finalize the perfect cake for you.</p></div>
+            <div class="text-center"><div class="bg-primary w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 shadow-md"><span class="text-3xl font-bold text-white">3</span></div><h3 class="text-xl font-bold text-gray-800 mb-3">Confirm delivery date</h3><p class="text-gray-600">We'll arrange pickup or delivery — and that's it!</p></div>
+        </div>
+        <div class="text-center mt-12"><a href="https://wa.me/7000936438" style="background-color: #25D366 !important; border-radius: 22px;" class="hover:bg-opacity-90 text-white font-bold py-3 px-6 inline-flex items-center transition duration-300"><i class="fab fa-whatsapp mr-2 text-xl"></i> Message Us on WhatsApp</a></div>
+    </section>
+
+    <section id="contact" data-section-id="contact" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+        <div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold">Let's Bake Something Sweet Together!</h2></div>
+        <div class="flex flex-col md:flex-row gap-8">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <div class="bg-white rounded-2xl p-8 shadow-md h-full">
+                    <h3 class="text-2xl font-bold text-primary mb-8">Send Us a Message</h3>
+                    <form id="orderForm" action="https://script.google.com/macros/s/AKfycbwCLur8tLOP41up0whMDOIBenzOcA10JxM5KWKubpMcU7ESfghFMySFLoVxW_h_XM2FSA/exec" method="POST" class="space-y-6">
+                        <div><label for="name" class="block text-gray-700 mb-2 font-medium">Your Name*</label><input type="text" id="name" name="name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg"></div>
+                        <div><label for="phone" class="block text-gray-700 mb-2 font-medium">Phone Number*</label><input type="tel" id="phone" name="phone" required class="w-full px-4 py-3 border border-gray-300 rounded-lg"></div>
+                        <div><label for="cakeType" class="block text-gray-700 mb-2 font-medium">Cake Type*</label><select id="cakeType" name="cakeType" required class="w-full px-4 py-3 border border-gray-300 rounded-lg"><option value="">Select a cake</option><option value="Strawberry Cream">Strawberry Cream Cake</option><option value="Chocolate Truffle">Chocolate Truffle Cake</option><option value="Custom Theme">Custom Theme Cake</option><option value="Rainbow">Rainbow Cake</option><option value="Cupcakes">Mini Cupcake Box</option><option value="Jain/Vegan">Jain/Vegan Cake</option></select></div>
+                        <div><label for="deliveryDate" class="block text-gray-700 mb-2 font-medium">Delivery Date*</label><input type="date" id="deliveryDate" name="deliveryDate" required class="w-full px-4 py-3 border border-gray-300 rounded-lg"></div>
+                        <div><label for="message" class="block text-gray-700 mb-2 font-medium">Special Instructions</label><textarea id="message" name="message" rows="4" class="w-full px-4 py-3 border border-gray-300 rounded-lg"></textarea></div>
+                        <button type="submit" class="bg-primary hover:bg-opacity-90 text-white font-bold py-4 px-8 rounded-lg w-full transition duration-300"><i class="fas fa-paper-plane mr-2"></i> Send Order Request</button>
+                    </form>
+                </div>
+            </div>
+            <div class="md:w-1/2">
+                <div class="bg-white rounded-2xl p-8 shadow-md h-full space-y-6">
+                    <h3 class="text-xl font-bold text-gray-800">Get in Touch</h3>
+                    <div class="flex items-start"><div class="bg-pink-100 p-3 rounded-full mr-4"><i class="fas fa-phone-alt text-primary"></i></div><div><h4 class="font-bold text-gray-800">Phone</h4><a href="#" id="contact-phone" class="text-gray-600 hover:text-primary"></a></div></div>
+                    <div class="flex items-start"><div class="bg-pink-100 p-3 rounded-full mr-4"><i class="fas fa-envelope text-primary"></i></div><div><h4 class="font-bold text-gray-800">Email</h4><a href="#" id="contact-email" class="text-gray-600 hover:text-primary"></a></div></div>
+                    <div class="flex items-start"><div class="bg-pink-100 p-3 rounded-full mr-4"><i class="fas fa-map-marker-alt text-primary"></i></div><div><h4 class="font-bold text-gray-800">Location</h4><p id="contact-address" class="text-gray-600"></p></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center mb-4"><div class="logo-icon"><img src="logo.png" alt=""></div><span class="logo text-white">Purva's Cake Creation</span></div>
+                    <p class="text-gray-300 mb-4">Handmade vegetarian cakes baked with love in Pipariya. Specializing in custom designs for all occasions.</p>
+                </div>
+                <div><h3 class="text-xl font-bold mb-4 text-white">Quick Links</h3><ul class="space-y-2"><li><a href="#home" class="text-gray-300 hover:text-white">Home</a></li><li><a href="#about" class="text-gray-300 hover:text-white">About Us</a></li><li><a href="#cakes" class="text-gray-300 hover:text-white">Our Cakes</a></li><li><a href="#gallery" class="text-gray-300 hover:text-white">Gallery</a></li><li><a href="#testimonials" class="text-gray-300 hover:text-white">Testimonials</a></li><li><a href="#order" class="text-gray-300 hover:text-white">How to Order</a></li><li><a href="#contact" class="text-gray-300 hover:text-white">Contact</a></li></ul></div>
+                <div><h3 class="text-xl font-bold mb-4 text-white">Popular Flavors</h3><ul class="space-y-2"><li class="text-gray-300">Chocolate Truffle</li><li class="text-gray-300">Strawberry Cream</li><li class="text-gray-300">Red Velvet</li><li class="text-gray-300">Pineapple</li></ul></div>
+                <div><h3 class="text-xl font-bold mb-4 text-white">Contact Info</h3><ul class="space-y-3 text-gray-300">
+                    <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i><span id="footer-address"></span></li>
+                    <li class="flex items-center"><i class="fas fa-phone-alt mr-3 text-primary"></i><a href="#" id="footer-phone" class="hover:text-white"></a></li>
+                    <li class="flex items-center"><i class="fas fa-envelope mr-3 text-primary"></i><a href="#" id="footer-email" class="hover:text-white"></a></li>
+                    <li class="flex items-center"><i class="fas fa-clock mr-3 text-primary"></i><span id="footer-hours"></span></li>
+                </ul></div>
+            </div>
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center text-sm text-gray-400"><p>© 2025 Purva's Cake Creation. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+    <script async src="//www.instagram.com/embed.js"></script>
+
+    <script>
+        // PASTE YOUR UNIQUE FIREBASE CONFIGURATION HERE
+        const firebaseConfig = {
+    apiKey: "AIzaSyBGoux2SD0nRj1wv7aCI21fwSRHpbuiuGQ",
+    authDomain: "purvas-cake-creation.firebaseapp.com",
+    projectId: "purvas-cake-creation",
+    storageBucket: "purvas-cake-creation.firebasestorage.app",
+    messagingSenderId: "887625198206",
+    appId: "1:887625198206:web:04d423454c54451b6c862f",
+    measurementId: "G-MF53MVZBNK"
+  };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCakes();
+            loadGallery();
+            loadInstagramPosts(); // <-- NEW FUNCTION CALL
+            loadTestimonials();
+            loadBusinessInfo();
+            setupMobileMenu();
+            setupContactForm();
+            setTimeout(setupNavUnderline, 150); 
+        });
+
+        // --- All other functions (nav, cakes, gallery, etc. are the same) ---
+        // ...
+        
+        // --- NEW FUNCTION TO LOAD INSTAGRAM POSTS ---
+        function loadInstagramPosts() {
+            const container = document.getElementById('instagram-posts-container');
+            if (!container) return;
+            db.collection('instagram').orderBy('createdAt', 'desc').get().then(snapshot => {
+                if (snapshot.empty) {
+                    container.innerHTML = `<p class="text-gray-600 text-center w-full">Our latest Instagram posts will be shown here!</p>`;
+                    return;
+                }
+                container.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const post = doc.data();
+                    container.innerHTML += `
+                    <div class="flex-shrink-0 w-[300px] snap-start">
+                        <blockquote class="instagram-media" data-instgrm-permalink="${post.url}" data-instgrm-version="14"></blockquote>
+                    </div>`;
+                });
+                // Re-run the Instagram script to process the new embeds
+                if (window.instgrm) {
+                    window.instgrm.Embeds.process();
+                }
+            });
+        }
+        
+        function setupNavUnderline() {
+            const navContainer = document.getElementById('nav-container');
+            const navLinks = document.querySelectorAll('#nav-container a.desktop-nav-link');
+            const underline = document.getElementById('nav-underline');
+            const sections = document.querySelectorAll('section[data-section-id]');
+            if (!navContainer || !navLinks.length || !underline || !sections.length) return;
+            let activeLink = null;
+            function moveUnderlineTo(link) {
+                if (!link) return;
+                const containerRect = navContainer.getBoundingClientRect();
+                const linkRect = link.getBoundingClientRect();
+                underline.style.left = `${linkRect.left - containerRect.left}px`;
+                underline.style.width = `${linkRect.width}px`;
+                underline.style.opacity = '1';
+            }
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.getAttribute('data-section-id');
+                        const correspondingLink = document.querySelector(`#nav-container a[data-section="${sectionId}"]`);
+                        if (correspondingLink) {
+                            activeLink = correspondingLink;
+                            moveUnderlineTo(activeLink);
+                        }
+                    }
+                });
+            }, { rootMargin: "-40% 0px -60% 0px" });
+            sections.forEach(section => observer.observe(section));
+            navLinks.forEach(link => link.addEventListener('mouseenter', () => moveUnderlineTo(link)));
+            navContainer.addEventListener('mouseleave', () => moveUnderlineTo(activeLink));
+        }
+        
+        function loadCakes() {
+            const container = document.querySelector('#cakes .grid');
+            if (!container) return;
+            db.collection('cakes').orderBy('order', 'desc').get().then(snapshot => {
+                if (snapshot.empty) { container.innerHTML = `<p class="text-white text-center col-span-3">Our latest cake creations will be displayed here soon!</p>`; return; }
+                container.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const cake = doc.data();
+                    container.innerHTML += `<div class="cake-card group bg-white rounded-2xl md:rounded-3xl overflow-hidden shadow-md transition-all duration-300"><div class="overflow-hidden"><img src="${cake.imageURL}" alt="${cake.title}" class="w-full h-64 object-cover transform group-hover:scale-110 transition duration-700"></div><div class="p-6"><h3 class="text-2xl font-bold text-gray-800 mb-3">${cake.title}</h3><p class="text-gray-600">${cake.description}</p><div class="mt-4"><span class="inline-block bg-pink-100 text-primary px-3 py-1 rounded-full text-sm font-medium">${cake.tag}</span></div></div></div>`;
+                });
+            });
+        }
+        function loadGallery() {
+            const container = document.querySelector('#gallery .grid');
+            if (!container) return;
+            db.collection('gallery').orderBy('createdAt', 'desc').get().then(snapshot => {
+                if (snapshot.empty) { container.innerHTML = `<p class="text-gray-600 text-center col-span-3">New photos from our kitchen are coming soon!</p>`; return; }
+                container.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const item = doc.data();
+                    container.innerHTML += `<div class="gallery-item relative rounded-xl overflow-hidden shadow-lg"><img src="${item.imageURL}" alt="${item.description}" class="w-full h-full object-cover aspect-square"><div class="gallery-overlay absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center opacity-0 transition-opacity duration-300"><div class="text-white text-center p-4"><h3 class="text-xl font-bold">${item.description}</h3></div></div></div>`;
+                });
+            });
+        }
+        function loadTestimonials() {
+            const container = document.getElementById('testimonials-container');
+            if (!container) return;
+            db.collection('testimonials').orderBy('createdAt', 'desc').get().then(snapshot => {
+                if (snapshot.empty) { container.innerHTML = `<p class="text-white text-center">No testimonials yet. Be the first!</p>`; return; }
+                const testimonialsData = snapshot.docs.map(doc => doc.data());
+                const testimonialHTML = testimonialsData.map(createTestimonialCard).join('');
+                if (testimonialsData.length >= 3) {
+                    container.innerHTML = `<div class="animate-slide-testimonials">${testimonialHTML + testimonialHTML}</div>`;
+                    container.classList.add('overflow-hidden');
+                } else {
+                    container.innerHTML = `<div class="flex flex-wrap justify-center items-center">${testimonialHTML}</div>`;
+                    container.classList.remove('overflow-hidden');
+                }
+            });
+        }
+        function createTestimonialCard(testimonial) {
+            return `<div class="testimonial-card group bg-white p-8 rounded-2xl shadow-md min-w-[300px] max-w-[300px] m-4 flex-shrink-0"><div class="flex items-center mb-6"><div class="w-16 h-16 rounded-full bg-amber-100 flex items-center justify-center text-2xl font-bold text-primary">${testimonial.customer.substring(0, 2).toUpperCase()}</div><div class="ml-4"><h4 class="font-bold text-gray-800 text-lg">${testimonial.customer}</h4><div class="rating-stars text-yellow-500 mt-1">${'⭐'.repeat(testimonial.rating)}</div></div></div><p class="text-gray-700 mb-6">"${testimonial.quote}"</p></div>`;
+        }
+        function loadBusinessInfo() {
+            const settingsRef = db.collection('settings').doc('info');
+            settingsRef.onSnapshot(doc => {
+                if (!doc.exists) return;
+                const settings = doc.data();
+                const safeSet = (id, type, value, prefix = '') => {
+                    const el = document.getElementById(id);
+                    if (el && value) {
+                        if (type === 'text') el.textContent = value;
+                        if (type === 'href') el.href = `${prefix}${value}`;
+                    }
+                };
+                safeSet('contact-phone', 'href', settings.phone, 'tel:');
+                safeSet('contact-phone', 'text', settings.phone);
+                safeSet('contact-email', 'href', settings.email, 'mailto:');
+                safeSet('contact-email', 'text', settings.email);
+                safeSet('contact-address', 'text', settings.address);
+                safeSet('footer-phone', 'href', settings.phone, 'tel:');
+                safeSet('footer-phone', 'text', settings.phone);
+                safeSet('footer-email', 'href', settings.email, 'mailto:');
+                safeSet('footer-email', 'text', settings.email);
+                safeSet('footer-address', 'text', settings.address);
+                safeSet('footer-hours', 'text', settings.hours);
+            });
+        }
+        function setupMobileMenu() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            }
+        }
+        function setupContactForm() {
+            const orderForm = document.getElementById('orderForm');
+            if (orderForm) {
+                orderForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const button = orderForm.querySelector('button[type="submit"]');
+                    const originalButtonHTML = button.innerHTML;
+                    button.disabled = true;
+                    button.innerHTML = 'Sending...';
+                    fetch(orderForm.action, { method: 'POST', body: new FormData(orderForm) })
+                        .then(response => { if (response.ok) { alert("Thank you! Your order request has been submitted successfully."); orderForm.reset(); } else { throw new Error('Network response was not ok.'); } })
+                        .catch(error => alert(`Error: Could not submit the form. ${error.message}`))
+                        .finally(() => { button.disabled = false; button.innerHTML = originalButtonHTML; });
+                });
+            }
+        }
+    </script>
+</body>
+</html>
