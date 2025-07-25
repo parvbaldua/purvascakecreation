@@ -7,45 +7,189 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --primary: #FF2D55; --secondary: #FF9A8B; --light: #f1f5f9; }
-        body { background-color: var(--light); font-family: 'Poppins', sans-serif; }
-        .input-field { @apply w-full px-4 py-3 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition duration-300; }
-        .btn-primary { @apply w-full bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-opacity-90 transition duration-300 flex items-center justify-center; }
-        .btn-primary:disabled { @apply bg-gray-400 cursor-not-allowed; }
-        .btn-secondary { @apply bg-gray-700 text-white font-bold py-2 px-4 rounded-lg hover:bg-gray-800 transition; }
-        .tab { @apply px-4 py-2 font-semibold text-gray-600 rounded-t-lg hover:bg-white hover:text-primary whitespace-nowrap cursor-pointer; }
-        .tab.active { @apply bg-white text-primary border-b-2 border-primary; }
-        .admin-section { @apply bg-white p-4 sm:p-6 rounded-b-2xl rounded-r-2xl shadow-lg; }
+        :root {
+            --primary: #FF2D55;
+            --secondary: #4F46E5;
+            --accent: #10B981;
+            --surface: #ffffff;
+            --background: #f8fafc;
+        }
+        
+        html, body {
+            height: 100%;
+            scroll-behavior: smooth;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: var(--background);
+        }
+
+        /* Enhanced Components */
+        .input-field {
+            @apply w-full px-5 py-3.5 bg-surface border-2 border-gray-200 rounded-2xl
+                   focus:ring-2 focus:ring-primary focus:border-transparent
+                   transition-all duration-300 text-gray-700 placeholder-gray-400
+                   text-sm sm:text-base;
+        }
+
+        .btn-primary {
+            @apply bg-gradient-to-r from-primary to-[#FF6B8B] text-surface font-bold
+                   px-8 py-4 rounded-2xl hover:shadow-xl transition-all flex items-center
+                   justify-center gap-3 text-sm sm:text-base shadow-lg;
+        }
+
+        .admin-section {
+            @apply bg-surface p-8 sm:p-10 rounded-3xl shadow-xl border border-gray-100;
+        }
+
+        .stat-card {
+            @apply bg-surface p-8 rounded-3xl shadow-lg border border-gray-100
+                   flex flex-col items-center text-center space-y-4
+                   hover:shadow-2xl transition-all;
+        }
+
+        /* Navigation */
+        .nav-container {
+            @apply flex overflow-x-auto scrollbar-hide px-6 bg-gradient-to-r from-primary/5 to-secondary/5
+                   rounded-2xl shadow-inner border border-gray-200;
+        }
+
+        .nav-tab {
+            @apply px-8 py-5 font-semibold text-gray-600 whitespace-nowrap
+                   border-b-2 border-transparent hover:text-primary
+                   transition-all flex items-center gap-3 text-sm sm:text-base;
+        }
+
+        .nav-tab.active {
+            @apply text-primary border-primary border-b-[3px] font-bold bg-primary/10;
+        }
+
+        /* Typography */
+        h1 { @apply text-4xl sm:text-5xl font-extrabold tracking-tight; }
+        h2 { @apply text-3xl sm:text-4xl font-bold; }
+        h3 { @apply text-xl sm:text-2xl font-semibold; }
     </style>
 </head>
 <body>
 
-    <div id="admin-panel" class="max-w-4xl mx-auto p-4 sm:p-6">
+    <div id="admin-panel" class="max-w-5xl mx-auto p-4 sm:p-6">
 
-        <div id="login-section" style="display: none;" class="bg-white p-8 rounded-2xl shadow-lg max-w-md mx-auto">
+        <div id="login-section" style="display: none;" class="bg-white p-8 rounded-2xl shadow-lg max-w-md mx-auto mt-12">
             <h2 class="text-3xl font-bold text-center text-primary mb-6">Admin Login</h2>
             <div id="login-form" class="space-y-4"><input type="email" id="login-email" class="input-field" placeholder="Email"><input type="password" id="login-password" class="input-field" placeholder="Password"><button onclick="loginUser()" class="btn-primary">Login</button></div>
-            <div id="signup-notice" class="hidden mt-4 text-center"><p class="mb-2 text-sm text-gray-600">No admin account found. Please create the first one.</p><input type="email" id="signup-email" class="input-field mt-2" placeholder="Admin Email"><input type="password" id="signup-password" class="input-field mt-2" placeholder="Choose a Password"><button onclick="createAdminUser()" class="btn-primary mt-2">Create Admin Account</button></div>
+            <div id="signup-notice" class="hidden mt-4 text-center"><p class="mb-2 text-sm text-gray-600">No admin account found. Please create one.</p><input type="email" id="signup-email" class="input-field mt-2" placeholder="Admin Email"><input type="password" id="signup-password" class="input-field mt-2" placeholder="Choose a Password"><button onclick="createAdminUser()" class="btn-primary mt-2">Create Admin Account</button></div>
         </div>
 
-        <div id="main-content" class="hidden">
-            <div class="flex justify-between items-center mb-6"><h1 class="text-3xl font-bold text-primary">Admin Panel</h1><button onclick="logoutUser()" class="text-gray-500 hover:text-primary font-semibold">Logout</button></div>
-            <div class="flex border-b border-gray-200 overflow-x-auto">
-                <div id="tab-dashboard" onclick="showSection('dashboard')" class="tab active"><i class="fas fa-chart-line mr-2"></i>Dashboard</div>
-                <div id="tab-cakes" onclick="showSection('cakes')" class="tab"><i class="fas fa-birthday-cake mr-2"></i>Cakes</div>
-                <div id="tab-gallery" onclick="showSection('gallery')" class="tab"><i class="fas fa-images mr-2"></i>Gallery</div>
-                <div id="tab-instagram" onclick="showSection('instagram')" class="tab"><i class="fab fa-instagram mr-2"></i>Instagram</div>
-                <div id="tab-testimonials" onclick="showSection('testimonials')" class="tab"><i class="fas fa-star mr-2"></i>Testimonials</div>
-                <div id="tab-settings" onclick="showSection('settings')" class="tab"><i class="fas fa-cog mr-2"></i>Settings</div>
+        <div id="main-content" class="hidden dark-mode">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
+                <h1 class="text-2xl sm:text-3xl font-bold text-primary">Admin Panel</h1>
+                <button onclick="logoutUser()" class="text-black bg-gray-100 hover:bg-white font-semibold flex items-center gap-2 text-sm sm:text-base self-end border-2 border-gray-600 hover:border-primary px-4 py-2 rounded-lg shadow-sm">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
-            <div id="section-dashboard" class="admin-section grid grid-cols-2 md:grid-cols-4 gap-4"><div class="bg-blue-100 p-4 rounded-lg text-center"><p class="text-3xl font-bold text-blue-800" id="stats-cakes">0</p><p class="text-blue-700">Cakes</p></div><div class="bg-green-100 p-4 rounded-lg text-center"><p class="text-3xl font-bold text-green-800" id="stats-gallery">0</p><p class="text-green-700">Gallery</p></div><div class="bg-purple-100 p-4 rounded-lg text-center"><p class="text-3xl font-bold text-purple-800" id="stats-instagram">0</p><p class="text-purple-700">Instagram</p></div><div class="bg-yellow-100 p-4 rounded-lg text-center"><p class="text-3xl font-bold text-yellow-800" id="stats-testimonials">0</p><p class="text-yellow-700">Testimonials</p></div></div>
-            
-            <div id="section-cakes" class="admin-section hidden"><div class="bg-gray-50 p-4 rounded-lg mb-6"><h3 class="text-xl font-bold text-gray-800 mb-4" id="cake-form-title">Add New Cake</h3><input type="hidden" id="cake-edit-id"><input type="hidden" id="cake-image-url"><div class="space-y-4"><div><label class="font-medium text-gray-700">Cake Image</label><input type="file" id="cake-image" class="input-field" accept="image/*" onchange="previewImage(event, 'cake-image-preview')"><img id="cake-image-preview" class="w-24 h-24 object-cover rounded-md mt-2"></div><input type="text" id="cake-title" class="input-field" placeholder="Cake Name"><textarea id="cake-description" class="input-field" placeholder="Short description"></textarea><select id="cake-tag" class="input-field"><option value="Best Seller">Best Seller</option><option value="Popular">Popular</option><option value="Custom">Custom</option><option value="Festive">Festive</option><option value="New">New</option><option value="Special">Special</option></select><div class="flex gap-4"><button id="btn-save-cake" onclick="saveCake()" class="btn-primary flex-1">Save Cake</button><button type="button" onclick="clearCakeForm()" class="btn-secondary flex-1">Cancel</button></div></div></div><div id="cakes-list" class="space-y-3"></div></div>
-            
-            <div id="section-gallery" class="admin-section hidden"><div class="bg-gray-50 p-4 rounded-lg mb-6"><h3 class="text-xl font-bold text-gray-800 mb-4" id="gallery-form-title">Add Gallery Photo</h3><input type="hidden" id="gallery-edit-id"><input type="hidden" id="gallery-image-url"><div class="space-y-4"><div><label class="font-medium text-gray-700">Gallery Image</label><input type="file" id="gallery-image" class="input-field" accept="image/*" onchange="previewImage(event, 'gallery-image-preview')"><img id="gallery-image-preview" class="w-24 h-24 object-cover rounded-md mt-2"></div><input type="text" id="gallery-description" class="input-field" placeholder="Description"><div class="flex gap-4"><button id="btn-save-gallery" onclick="saveGalleryItem()" class="btn-primary flex-1">Save Photo</button><button type="button" onclick="clearGalleryForm()" class="btn-secondary flex-1">Cancel</button></div></div></div><div id="gallery-list" class="space-y-3"></div></div>
-            
-            <div id="section-instagram" class="admin-section hidden"><div class="bg-gray-50 p-4 rounded-lg mb-6"><h3 class="text-xl font-bold text-gray-800 mb-4">Add Instagram Post</h3><p class="text-sm text-gray-600 mb-4">Copy the link to an Instagram post and paste it below.</p><div class="space-y-4"><input type="text" id="instagram-url" class="input-field" placeholder="Paste Instagram post link here"><button onclick="saveInstagramPost()" class="btn-primary">Add Post</button></div></div><h3 class="text-xl font-bold text-gray-800 mb-4">Featured Posts</h3><div id="instagram-list" class="space-y-3"></div></div>
-            <div id="section-testimonials" class="admin-section hidden"><div class="bg-gray-50 p-4 rounded-lg mb-6"><h3 class="text-xl font-bold text-gray-800 mb-4" id="testimonial-form-title">Add Testimonial</h3><input type="hidden" id="testimonial-edit-id"><div class="space-y-4"><input type="text" id="testimonial-customer" class="input-field" placeholder="Customer Name"><textarea id="testimonial-quote" class="input-field" placeholder="Customer's quote"></textarea><select id="testimonial-rating" class="input-field"><option value="5">⭐⭐⭐⭐⭐</option><option value="4">⭐⭐⭐⭐</option><option value="3">⭐⭐⭐</option><option value="2">⭐⭐</option><option value="1">⭐</option></select><div class="flex gap-4"><button onclick="saveTestimonial()" class="btn-primary flex-1">Save Testimonial</button><button type="button" onclick="clearTestimonialForm()" class="btn-secondary flex-1">Cancel</button></div></div></div><div id="testimonials-list" class="space-y-3"></div></div>
+
+            <div class="bg-white rounded-t-xl shadow-lg mx-4 mt-6">
+                <div class="flex border-b border-gray-200 overflow-x-auto px-8 gap-x-8 py-2">
+                    <div id="tab-dashboard" onclick="showSection('dashboard')" class="tab active flex-shrink-0"><i class="fas fa-chart-line mr-2"></i>Dashboard</div>
+                    <div id="tab-cakes" onclick="showSection('cakes')" class="tab flex-shrink-0"><i class="fas fa-birthday-cake mr-2"></i>Cakes</div>
+                    <div id="tab-gallery" onclick="showSection('gallery')" class="tab flex-shrink-0"><i class="fas fa-images mr-2"></i>Gallery</div>
+                    <div id="tab-instagram" onclick="showSection('instagram')" class="tab flex-shrink-0"><i class="fab fa-instagram mr-2"></i>Instagram</div>
+                    <div id="tab-testimonials" onclick="showSection('testimonials')" class="tab flex-shrink-0"><i class="fas fa-star mr-2"></i>Testimonials</div>
+                    <div id="tab-settings" onclick="showSection('settings')" class="tab flex-shrink-0"><i class="fas fa-cog mr-2"></i>Settings</div>
+                </div>
+            </div>
+
+            <div id="section-dashboard" class="admin-section grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Cake Stats Card -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 transition-all hover:shadow-xl">
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="p-3 bg-primary/10 rounded-full">
+                            <i class="fas fa-birthday-cake text-3xl text-primary"></i>
+                        </div>
+                        <p class="text-4xl font-bold text-gray-800" id="stats-cakes">0</p>
+                        <p class="text-gray-600 font-semibold uppercase tracking-wide text-sm">Total Cakes</p>
+                    </div>
+                </div>
+                
+                <!-- Gallery Stats Card -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 transition-all hover:shadow-xl">
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="p-3 bg-green-100/20 rounded-full">
+                            <i class="fas fa-images text-3xl text-green-600"></i>
+                        </div>
+                        <p class="text-4xl font-bold text-gray-800" id="stats-gallery">0</p>
+                        <p class="text-gray-600 font-semibold uppercase tracking-wide text-sm">Gallery Photos</p>
+                    </div>
+                </div>
+                
+                <!-- Instagram Stats Card -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 transition-all hover:shadow-xl">
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="p-3 bg-purple-100/20 rounded-full">
+                            <i class="fab fa-instagram text-3xl text-purple-600"></i>
+                        </div>
+                        <p class="text-4xl font-bold text-gray-800" id="stats-instagram">0</p>
+                        <p class="text-gray-600 font-semibold uppercase tracking-wide text-sm">Social Posts</p>
+                    </div>
+                </div>
+                
+                <!-- Testimonials Stats Card -->
+                <div class="bg-white p-6 rounded-2xl shadow-lg border border-gray-100 transition-all hover:shadow-xl">
+                    <div class="flex flex-col items-center space-y-4">
+                        <div class="p-3 bg-amber-100/20 rounded-full">
+                            <i class="fas fa-star text-3xl text-amber-600"></i>
+                        </div>
+                        <p class="text-4xl font-bold text-gray-800" id="stats-testimonials">0</p>
+                        <p class="text-gray-600 font-semibold uppercase tracking-wide text-sm">Customer Reviews</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="section-cakes" class="admin-section hidden">
+                <div class="bg-gray-50 p-6 rounded-2xl mb-8 border border-gray-200 space-y-6 shadow-inner">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-4 flex items-center gap-3">
+                        <i class="fas fa-plus-circle text-primary"></i>
+                    <h3 class="text-2xl font-bold text-gray-900 mb-6" id="cake-form-title">Add New Cake</h3>
+                    <input type="hidden" id="cake-edit-id">
+                    <input type="hidden" id="cake-image-url">
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Cake Image</label>
+                            <input type="file" id="cake-image" class="input-field" accept="image/*" onchange="previewImage(event, 'cake-image-preview')">
+                            <img id="cake-image-preview" class="w-32 h-32 object-cover rounded-xl mt-4 border-2 border-dashed border-gray-200">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Cake Name</label>
+                            <input type="text" id="cake-title" class="input-field" placeholder="Enter cake name">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                            <textarea id="cake-description" class="input-field h-32" placeholder="Add a delicious description"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                            <select id="cake-tag" class="input-field">
+                                <option value="Best Seller">Best Seller</option>
+                                <option value="Popular">Popular</option>
+                                <option value="Custom">Custom</option>
+                                <option value="Festive">Festive</option>
+                                <option value="New">New</option>
+                                <option value="Special">Special</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col sm:flex-row gap-4 mt-6">
+                            <button id="btn-save-cake" onclick="saveCake()" class="btn-primary flex-1">Save Cake</button>
+                            <button type="button" onclick="clearCakeForm()" class="btn-secondary flex-1">Cancel</button>
+                        </div>
+                    </div>
+                </div>
+                <h3 class="text-xl font-bold text-gray-800 mb-4">Manage Cakes</h3><div id="cakes-list" class="space-y-4"></div>
+            </div>
+
+            <div id="section-gallery" class="admin-section hidden"><div class="bg-gray-50 p-4 rounded-lg mb-6 border"><h3 class="text-xl font-bold text-gray-800 mb-4" id="gallery-form-title">Add Gallery Photo</h3><input type="hidden" id="gallery-edit-id"><input type="hidden" id="gallery-image-url"><div class="space-y-4"><div><label class="font-medium text-gray-700">Gallery Image</label><input type="file" id="gallery-image" class="input-field" accept="image/*" onchange="previewImage(event, 'gallery-image-preview')"><img id="gallery-image-preview" class="w-24 h-24 object-cover rounded-md mt-2"></div><input type="text" id="gallery-description" class="input-field" placeholder="Description"><div class="flex flex-col sm:flex-row gap-4"><button id="btn-save-gallery" onclick="saveGalleryItem()" class="btn-primary flex-1">Save Photo</button><button type="button" onclick="clearGalleryForm()" class="btn-secondary flex-1">Cancel</button></div></div></div><h3 class="text-xl font-bold text-gray-800 mb-4">Manage Gallery</h3><div id="gallery-list" class="space-y-4"></div></div>
+            <div id="section-instagram" class="admin-section hidden"><div class="bg-gray-50 p-4 rounded-lg mb-6 border"><h3 class="text-xl font-bold text-gray-800 mb-4">Add Instagram Post</h3><p class="text-sm text-gray-600 mb-4">Copy the link to an Instagram post and paste it below.</p><div class="space-y-4"><input type="text" id="instagram-url" class="input-field" placeholder="Paste Instagram post link here"><button onclick="saveInstagramPost()" class="btn-primary">Add Post</button></div></div><h3 class="text-xl font-bold text-gray-800 mb-4">Featured Posts</h3><div id="instagram-list" class="space-y-4"></div></div>
+            <div id="section-testimonials" class="admin-section hidden"><div class="bg-gray-50 p-4 rounded-lg mb-6 border"><h3 class="text-xl font-bold text-gray-800 mb-4" id="testimonial-form-title">Add Testimonial</h3><input type="hidden" id="testimonial-edit-id"><div class="space-y-4"><input type="text" id="testimonial-customer" class="input-field" placeholder="Customer Name"><textarea id="testimonial-quote" class="input-field" placeholder="Customer's quote"></textarea><select id="testimonial-rating" class="input-field"><option value="5">⭐⭐⭐⭐⭐</option><option value="4">⭐⭐⭐⭐</option><option value="3">⭐⭐⭐</option><option value="2">⭐⭐</option><option value="1">⭐</option></select><div class="flex flex-col sm:flex-row gap-4"><button onclick="saveTestimonial()" class="btn-primary flex-1">Save Testimonial</button><button type="button" onclick="clearTestimonialForm()" class="btn-secondary flex-1">Cancel</button></div></div></div><h3 class="text-xl font-bold text-gray-800 mb-4">Manage Testimonials</h3><div id="testimonials-list" class="space-y-4"></div></div>
             <div id="section-settings" class="admin-section hidden"><h3 class="text-xl font-bold text-gray-800 mb-4">Business Information</h3><div class="space-y-4"><input type="tel" id="setting-phone" class="input-field" placeholder="Phone Number"><input type="email" id="setting-email" class="input-field" placeholder="Email Address"><input type="text" id="setting-address" class="input-field" placeholder="Location"><input type="text" id="setting-hours" class="input-field" placeholder="Working Hours"><button onclick="saveSettings()" class="btn-primary">Save Settings</button></div></div>
         </div>
     </div>
@@ -57,7 +201,7 @@
 
     <script>
         // PASTE YOUR UNIQUE FIREBASE CONFIGURATION HERE
-         const firebaseConfig = {
+        const firebaseConfig = {
     apiKey: "AIzaSyBGoux2SD0nRj1wv7aCI21fwSRHpbuiuGQ",
     authDomain: "purvas-cake-creation.firebaseapp.com",
     projectId: "purvas-cake-creation",
@@ -66,7 +210,6 @@
     appId: "1:887625198206:web:04d423454c54451b6c862f",
     measurementId: "G-MF53MVZBNK"
   };
-
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
@@ -79,16 +222,20 @@
         const createAdminUser = () => {
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
-            if(!email || !password) return alert("Please enter email and password.");
+            if (!email || !password) return alert("Please enter email and password.");
             auth.createUserWithEmailAndPassword(email, password)
-                .then(cred => db.collection('users').doc(cred.user.uid).set({ email: email, isAdmin: true, createdAt: firebase.firestore.FieldValue.serverTimestamp() }))
+                .then(cred => db.collection('users').doc(cred.user.uid).set({
+                    email: cred.user.email,
+                    isAdmin: true,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                }))
                 .catch(err => alert("Error creating user: " + err.message));
         };
         auth.onAuthStateChanged(user => {
             if (user) {
                 document.getElementById('login-section').style.display = 'none';
                 document.getElementById('main-content').style.display = 'block';
-                loadAllDataFromFirestore(); 
+                loadAllDataFromFirestore();
             } else {
                 document.getElementById('login-section').style.display = 'block';
                 document.getElementById('main-content').style.display = 'none';
@@ -99,23 +246,25 @@
             }
         });
 
-        // --- NEW IMAGE PREVIEW FUNCTION ---
+        // --- IMAGE PREVIEW FUNCTION ---
         function previewImage(event, previewElementId) {
+            const file = event.target.files[0];
+            if(!file) return;
             const reader = new FileReader();
-            reader.onload = function(){
+            reader.onload = function() {
                 const output = document.getElementById(previewElementId);
                 output.src = reader.result;
             };
-            reader.readAsDataURL(event.target.files[0]);
+            reader.readAsDataURL(file);
         }
-        
-        // --- IMAGE UPLOAD LOGIC ---
+
+        // --- IMAGE UPLOAD TO FIREBASE STORAGE ---
         async function uploadImage(file, path) {
             const storageRef = storage.ref(`${path}/${Date.now()}-${file.name}`);
             const snapshot = await storageRef.put(file);
             return await snapshot.ref.getDownloadURL();
         }
-        
+
         // --- GENERIC HELPER FUNCTIONS ---
         const showSection = (sectionName) => {
             document.querySelectorAll('.admin-section').forEach(sec => sec.classList.add('hidden'));
@@ -129,10 +278,10 @@
             }
         };
         const updateDashboard = () => {
-             db.collection('cakes').get().then(s => document.getElementById('stats-cakes').textContent = s.size);
-             db.collection('gallery').get().then(s => document.getElementById('stats-gallery').textContent = s.size);
-             db.collection('instagram').get().then(s => document.getElementById('stats-instagram').textContent = s.size);
-             db.collection('testimonials').get().then(s => document.getElementById('stats-testimonials').textContent = s.size);
+            db.collection('cakes').get().then(s => document.getElementById('stats-cakes').textContent = s.size);
+            db.collection('gallery').get().then(s => document.getElementById('stats-gallery').textContent = s.size);
+            db.collection('instagram').get().then(s => document.getElementById('stats-instagram').textContent = s.size);
+            db.collection('testimonials').get().then(s => document.getElementById('stats-testimonials').textContent = s.size);
         };
         const loadAllDataFromFirestore = () => {
             loadCakes();
@@ -152,13 +301,27 @@
             const imageFile = document.getElementById('cake-image').files[0];
             let imageURL = document.getElementById('cake-image-url').value;
             try {
-                if (imageFile) imageURL = await uploadImage(imageFile, 'cakes');
-                else if (!id) throw new Error("Please select an image for a new cake.");
-                const cakeData = { title: document.getElementById('cake-title').value, description: document.getElementById('cake-description').value, tag: document.getElementById('cake-tag').value, imageURL: imageURL, order: id ? parseInt(document.getElementById('cake-edit-id').dataset.order) : Date.now() };
+                if (imageFile) {
+                    imageURL = await uploadImage(imageFile, 'cakes');
+                } else if (!id) {
+                    throw new Error("Please select an image for a new cake.");
+                }
+                const cakeData = {
+                    title: document.getElementById('cake-title').value,
+                    description: document.getElementById('cake-description').value,
+                    tag: document.getElementById('cake-tag').value,
+                    imageURL: imageURL,
+                    order: id ? parseInt(document.getElementById('cake-edit-id').dataset.order) : Date.now()
+                };
                 const promise = id ? db.collection('cakes').doc(id).update(cakeData) : db.collection('cakes').add(cakeData);
                 await promise;
                 clearCakeForm();
-            } catch (err) { alert(err.message); } finally { btn.disabled = false; btn.textContent = 'Save Cake'; }
+            } catch (err) {
+                alert(err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Save Cake';
+            }
         }
         const editCake = (id) => {
             db.collection('cakes').doc(id).get().then(doc => {
@@ -181,19 +344,32 @@
                 list.innerHTML = '';
                 snapshot.forEach(doc => {
                     const cake = { id: doc.id, ...doc.data() };
-                    list.innerHTML += `<div class="flex items-center justify-between bg-gray-100 p-3 rounded-lg"> <div class="flex items-center"><img src="${cake.imageURL}" class="w-16 h-16 object-cover rounded-md mr-4" alt="Cake image"><div><p class="font-bold text-gray-800">${cake.title}</p><span class="text-sm text-white bg-primary px-2 py-1 rounded-full">${cake.tag}</span></div></div> <div class="flex items-center gap-3"><button onclick="editCake('${cake.id}')" class="text-blue-500"><i class="fas fa-edit"></i></button><button onclick="deleteItem('cakes', '${cake.id}')" class="text-red-500"><i class="fas fa-trash-alt"></i></button></div></div>`;
+                    list.innerHTML += `
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gray-50 border p-3 rounded-lg gap-4">
+                            <div class="flex items-center w-full sm:w-auto">
+                                <img src="${cake.imageURL}" class="w-16 h-16 object-cover rounded-md mr-4 flex-shrink-0" alt="Cake image">
+                                <div class="flex-grow">
+                                    <p class="font-bold text-gray-800">${cake.title}</p>
+                                    <span class="text-sm text-white bg-primary px-2 py-1 rounded-full">${cake.tag}</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 self-end sm:self-center flex-shrink-0">
+                                <button onclick="editCake('${cake.id}')" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                                <button onclick="deleteItem('cakes', '${cake.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>`;
                 });
                 updateDashboard();
             });
         };
         const clearCakeForm = () => {
-             document.getElementById('cake-form-title').textContent = "Add New Cake";
-             document.getElementById('cake-edit-id').value = '';
-             document.getElementById('cake-image-url').value = '';
-             document.getElementById('cake-image-preview').src = '';
-             document.getElementById('cake-title').value = '';
-             document.getElementById('cake-description').value = '';
-             document.getElementById('cake-image').value = '';
+            document.getElementById('cake-form-title').textContent = "Add New Cake";
+            document.getElementById('cake-edit-id').value = '';
+            document.getElementById('cake-image-url').value = '';
+            document.getElementById('cake-image-preview').src = '';
+            document.getElementById('cake-title').value = '';
+            document.getElementById('cake-description').value = '';
+            document.getElementById('cake-image').value = '';
         };
 
         // --- GALLERY LOGIC ---
@@ -231,7 +407,17 @@
                 list.innerHTML = '';
                 snapshot.forEach(doc => {
                     const item = { id: doc.id, ...doc.data() };
-                    list.innerHTML += `<div class="flex items-center justify-between bg-gray-100 p-3 rounded-lg"><div class="flex items-center"><img src="${item.imageURL}" class="w-16 h-16 object-cover rounded-md mr-4" alt="Gallery image"><p>${item.description}</p></div><div class="flex items-center gap-3"><button onclick="editGalleryItem('${item.id}')" class="text-blue-500"><i class="fas fa-edit"></i></button><button onclick="deleteItem('gallery', '${item.id}')" class="text-red-500"><i class="fas fa-trash-alt"></i></button></div></div>`;
+                    list.innerHTML += `
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between bg-gray-50 border p-3 rounded-lg gap-2">
+                            <div class="flex items-center w-full sm:w-auto">
+                                <img src="${item.imageURL}" class="w-16 h-16 object-cover rounded-md mr-4 flex-shrink-0" alt="Gallery image">
+                                <p class="flex-grow">${item.description}</p>
+                            </div>
+                            <div class="flex items-center gap-4 self-end sm:self-center flex-shrink-0">
+                                <button onclick="editGalleryItem('${item.id}')" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button>
+                                <button onclick="deleteItem('gallery', '${item.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button>
+                            </div>
+                        </div>`;
                 });
                 updateDashboard();
             });
@@ -245,15 +431,77 @@
             document.getElementById('gallery-image').value = '';
         }
 
-        // --- INSTAGRAM, TESTIMONIALS, SETTINGS LOGIC (REMAINS THE SAME) ---
-        const loadInstagramPosts = () => { db.collection('instagram').orderBy('createdAt', 'desc').onSnapshot(s => { const l=document.getElementById('instagram-list'); l.innerHTML=''; s.forEach(d => { const p={id:d.id,...d.data()}; l.innerHTML+=`<div class="flex items-center justify-between bg-gray-100 p-3 rounded-lg"><p class="text-gray-600 text-sm truncate">${p.url}</p><button onclick="deleteItem('instagram', '${p.id}')" class="text-red-500"><i class="fas fa-trash-alt"></i></button></div>`}); updateDashboard(); }); };
-        const saveInstagramPost = () => { const u=document.getElementById('instagram-url'); if (!u.value.includes('instagram.com')) return alert('Please enter a valid Instagram post link.'); db.collection('instagram').add({ url: u.value, createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(() => u.value = ''); };
-        const loadTestimonials = () => { db.collection('testimonials').orderBy('createdAt', 'desc').onSnapshot(s => { const l=document.getElementById('testimonials-list'); l.innerHTML=''; s.forEach(d => { const i={id:d.id,...d.data()}; l.innerHTML+=`<div class="bg-gray-100 p-4 rounded-lg"><div class="flex justify-between items-start"><div><p class="font-bold">${i.customer}</p><p class="text-sm text-gray-600">"${i.quote}"</p><p class="text-yellow-500">${'⭐'.repeat(i.rating)}</p></div><div class="flex items-center gap-3"><button onclick="editTestimonial('${i.id}')" class="text-blue-500"><i class="fas fa-edit"></i></button><button onclick="deleteItem('testimonials', '${i.id}')" class="text-red-500"><i class="fas fa-trash-alt"></i></button></div></div></div>`}); updateDashboard(); }); };
-        const saveTestimonial = () => { const id=document.getElementById('testimonial-edit-id').value; const d={customer:document.getElementById('testimonial-customer').value,quote:document.getElementById('testimonial-quote').value,rating:document.getElementById('testimonial-rating').value,createdAt:firebase.firestore.FieldValue.serverTimestamp()}; const p=id?db.collection('testimonials').doc(id).update(d):db.collection('testimonials').add(d); p.then(clearTestimonialForm).catch(err=>alert(err.message)); };
-        const editTestimonial = (id) => { db.collection('testimonials').doc(id).get().then(d => { if(!d.exists) return; const i=d.data(); document.getElementById('testimonial-edit-id').value=id; document.getElementById('testimonial-customer').value=i.customer; document.getElementById('testimonial-quote').value=i.quote; document.getElementById('testimonial-rating').value=i.rating; document.getElementById('testimonial-form-title').textContent="Edit Testimonial"; showSection('testimonials'); }); };
-        const clearTestimonialForm = () => { document.getElementById('testimonial-form-title').textContent="Add New Testimonial"; document.getElementById('testimonial-edit-id').value=''; document.getElementById('testimonial-customer').value=''; document.getElementById('testimonial-quote').value=''; };
-        const loadSettings = () => { db.collection('settings').doc('info').get().then(d => { if(d.exists) { const s=d.data(); document.getElementById('setting-phone').value=s.phone||''; document.getElementById('setting-email').value=s.email||''; document.getElementById('setting-address').value=s.address||''; document.getElementById('setting-hours').value=s.hours||''; } }); };
-        const saveSettings = () => { const s={phone:document.getElementById('setting-phone').value,email:document.getElementById('setting-email').value,address:document.getElementById('setting-address').value,hours:document.getElementById('setting-hours').value}; db.collection('settings').doc('info').set(s, {merge:true}).then(()=>alert("Settings Saved!")); };
+        // --- INSTAGRAM LOGIC ---
+        const loadInstagramPosts = () => {
+            db.collection('instagram').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+                const list = document.getElementById('instagram-list');
+                list.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const post = { id: doc.id, ...doc.data() };
+                    list.innerHTML += `<div class="flex items-center justify-between bg-gray-50 border p-3 rounded-lg"><p class="text-gray-600 text-sm truncate">${post.url}</p><button onclick="deleteItem('instagram', '${post.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button></div>`;
+                });
+                updateDashboard();
+            });
+        };
+        const saveInstagramPost = () => {
+            const urlInput = document.getElementById('instagram-url');
+            if (!urlInput.value.includes('instagram.com')) return alert('Please enter a valid Instagram post link.');
+            db.collection('instagram').add({ url: urlInput.value, createdAt: firebase.firestore.FieldValue.serverTimestamp() }).then(() => urlInput.value = '');
+        };
+        
+        // --- TESTIMONIALS LOGIC ---
+        const loadTestimonials = () => {
+            db.collection('testimonials').orderBy('createdAt', 'desc').onSnapshot(snapshot => {
+                const list = document.getElementById('testimonials-list');
+                list.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const item = { id: doc.id, ...doc.data() };
+                    list.innerHTML += `<div class="bg-gray-50 border p-4 rounded-lg"><div class="flex justify-between items-start"><div><p class="font-bold">${item.customer}</p><p class="text-sm text-gray-600">"${item.quote}"</p><p class="text-yellow-500">${'⭐'.repeat(item.rating)}</p></div><div class="flex items-center gap-4"><button onclick="editTestimonial('${item.id}')" class="text-blue-500 hover:text-blue-700"><i class="fas fa-edit"></i></button><button onclick="deleteItem('testimonials', '${item.id}')" class="text-red-500 hover:text-red-700"><i class="fas fa-trash-alt"></i></button></div></div></div>`;
+                });
+                updateDashboard();
+            });
+        };
+        const saveTestimonial = () => {
+            const id = document.getElementById('testimonial-edit-id').value;
+            const itemData = { customer: document.getElementById('testimonial-customer').value, quote: document.getElementById('testimonial-quote').value, rating: document.getElementById('testimonial-rating').value, createdAt: firebase.firestore.FieldValue.serverTimestamp() };
+            const promise = id ? db.collection('testimonials').doc(id).update(itemData) : db.collection('testimonials').add(itemData);
+            promise.then(clearTestimonialForm).catch(err => alert(err.message));
+        };
+        const editTestimonial = (id) => {
+            db.collection('testimonials').doc(id).get().then(doc => {
+                if(!doc.exists) return;
+                const item = doc.data();
+                document.getElementById('testimonial-edit-id').value = id;
+                document.getElementById('testimonial-customer').value = item.customer;
+                document.getElementById('testimonial-quote').value = item.quote;
+                document.getElementById('testimonial-rating').value = item.rating;
+                document.getElementById('testimonial-form-title').textContent = "Edit Testimonial";
+                showSection('testimonials');
+});
+        };
+        const clearTestimonialForm = () => {
+            document.getElementById('testimonial-form-title').textContent = "Add New Testimonial";
+            document.getElementById('testimonial-edit-id').value = '';
+            document.getElementById('testimonial-customer').value = '';
+            document.getElementById('testimonial-quote').value = '';
+        };
+
+        // --- SETTINGS LOGIC ---
+        const loadSettings = () => {
+            db.collection('settings').doc('info').onSnapshot(doc => {
+                if(doc.exists) {
+                    const settings = doc.data();
+                    document.getElementById('setting-phone').value = settings.phone || '';
+                    document.getElementById('setting-email').value = settings.email || '';
+                    document.getElementById('setting-address').value = settings.address || '';
+                    document.getElementById('setting-hours').value = settings.hours || '';
+                }
+            });
+        };
+        const saveSettings = () => {
+            const settings = { phone: document.getElementById('setting-phone').value, email: document.getElementById('setting-email').value, address: document.getElementById('setting-address').value, hours: document.getElementById('setting-hours').value };
+            db.collection('settings').doc('info').set(settings, { merge: true }).then(() => alert("Settings Saved!"));
+        };
 
     </script>
 </body>
